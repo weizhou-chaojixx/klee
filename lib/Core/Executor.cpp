@@ -1795,6 +1795,8 @@ void Executor::callExternalFunction(ExecutionState &state, KInstruction *target,
         ref<Expr> resultExpr;
         auto resultWidth = getWidthForLLVMType(resultType);
         switch (resultWidth) {
+            case Expr::Bool:
+                resultExpr = ConstantExpr::create(result & 1, resultWidth);
             case Expr::Int8:
                 resultExpr = ConstantExpr::create((uint8_t) result, resultWidth);
                 break;
